@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mainwindow</class>
+ <widget class="QMainWindow" name="mainwindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>360</width>
+    <height>615</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>mainwindow</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(240, 255, 255)</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>520</y>
+      <width>81</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-color: rgba(163, 244, 244, 145);
+	color: black;
+    border-style: outset;
+	border-color: rgba(0, 135, 135, 100);
+    border-width: 2px;
+    border-radius: 5px;
+    min-width: 1em;
+    padding: 0px;
+	font: 10pt &quot;Alef&quot;;
+}
+QPushButton:pressed {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #dadbde, stop: 1 #f6f7fa);
+	color: black;
+	border-color: rgba(0, 235, 235, 100);
+	font: 10pt &quot;Alef&quot;;
+}</string>
+    </property>
+    <property name="text">
+     <string>save</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="formLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>341</width>
+      <height>481</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout"/>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>520</y>
+      <width>251</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 rgba(150, 255, 255, 5), stop: 1 rgba(163, 245, 245, 100));
+
+border-style: outset;
+border-color: rgba(0, 135, 135, 100);
+border-width: 2px;
+border-radius: 5px;
+selection-color: black;
+selection-background-color: rgb(170, 255, 255);
+font: 10pt &quot;Alef&quot;;</string>
+    </property>
+    <property name="text">
+     <string>write your task here...</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>141</x>
+      <y>1</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: transparent;
+font: 10pt 'Alef';
+color: rgba(153, 229, 229, 150);</string>
+    </property>
+    <property name="text">
+     <string>Your to-do list</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>0</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: transparent;
+font: 10pt 'Alef';</string>
+    </property>
+    <property name="text">
+     <string>Your to-do list</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>360</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menunew_to_do_list">
+    <property name="styleSheet">
+     <string notr="true">QMenu::item:selected{ background-color: rgba(149, 223, 223, 140); color: black; }</string>
+    </property>
+    <property name="title">
+     <string>actions</string>
+    </property>
+    <addaction name="actionnew_to_do_list"/>
+   </widget>
+   <addaction name="menunew_to_do_list"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionnew_to_do_list">
+   <property name="text">
+    <string>new to-do list</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
