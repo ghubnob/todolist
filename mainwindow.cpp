@@ -10,6 +10,7 @@
 #include <QPushButton>
 #include <QGraphicsDropShadowEffect>
 #include <QMessageBox>
+#include "mycheckbox.h"
 
 mainwindow::mainwindow(QWidget *parent)
     : QMainWindow(parent)
@@ -19,6 +20,8 @@ mainwindow::mainwindow(QWidget *parent)
     setupDatabase();
     loadListFromDatabase();
     setWindowTitle("TO-DO LIST");
+
+    if (ui->formLayout->count()==0) ui->label_emptyList->setText("There are no tasks here..");
 }
 
 mainwindow::~mainwindow()
@@ -37,7 +40,9 @@ void mainwindow::on_pushButton_clicked()
         return;
     }
 
-    QCheckBox *cb = new QCheckBox();
+    ui->label_emptyList->setText("");
+
+    MyCheckBox *cb = new MyCheckBox(this);
     cb->setText(text);
     cb->setStyleSheet("font: 10pt 'Alef';");
 
@@ -79,6 +84,7 @@ void mainwindow::on_pushButton_clicked()
     connect(delBtn, &QPushButton::clicked, this, [=]() {
         on_deleteButton_clicked(cb->text(), widget);
     });
+
 }
 
 void mainwindow::setupDatabase()
@@ -111,7 +117,7 @@ void mainwindow::loadListFromDatabase()
         QString task = query.value(0).toString();
         QString clicked = query.value(1).toString();
 
-        QCheckBox *cb = new QCheckBox();
+        MyCheckBox *cb = new MyCheckBox(this);
         cb->setText(task);
         if (clicked == "1") {
             cb->setChecked(true);
@@ -172,17 +178,19 @@ void mainwindow::on_deleteButton_clicked(const QString &task, QWidget *widget)
         delete widget;
     }
     cnt--;
-    for (int i=0; i < ui->formLayout->count(); ++i) {
+    for (int i = 0; i < ui->formLayout->count(); ++i) {
         QWidget *widget = ui->formLayout->itemAt(i)->widget();
         if (widget) {
-            QCheckBox *cb = widget->findChild<QCheckBox *>();
-            cb->setText(QString::number(i+1)+") "+cb->text().split(") ")[1]);
-            QSqlQuery query;
-            query.prepare("UPDATE todolist SET task=:task WHERE task=task");
-            query.bindValue(":task", QString::number(cnt)+") "+cb->text().split(") ")[1]);
-            query.exec();
+            MyCheckBox *cb = widget->findChild<MyCheckBox *>();
+            cb->setText(QString::number(i + 1) + ") " + cb->text().split(") ")[1]);
+
+            QSqlQuery updateQuery;
+            updateQuery.prepare("UPDATE todolist SET task=:task WHERE task=task");
+            updateQuery.bindValue(":task", QString::number(i + 1) + ") " + cb->text().split(") ")[1]);
+            updateQuery.exec();
         }
     }
+    if (ui->formLayout->count()==0) ui->label_emptyList->setText("There are no tasks here..");
 }
 
 void mainwindow::saveToDatabase() {
@@ -190,7 +198,7 @@ void mainwindow::saveToDatabase() {
     for (int i=0; i < ui->formLayout->count(); ++i) {
         QWidget *widget = ui->formLayout->itemAt(i)->widget();
         if (widget) {
-            QCheckBox *cb = widget->findChild<QCheckBox *>();
+            MyCheckBox *cb = widget->findChild<MyCheckBox *>();
             QSqlQuery query;
             query.prepare("INSERT INTO todolist (task, clicked) VALUES (:task, :clicked)");
             query.bindValue(":task", cb->text());
@@ -212,5 +220,34 @@ void mainwindow::on_actionnew_to_do_list_triggered()
     QMessageBox *msgbox = new QMessageBox();
     msgbox->setText("in development...");
     msgbox->exec();
+}
+
+void mainwindow::deleteTask(const QString &task, QWidget *widget)
+{
+    QWidget *wid1 = widget;
+    bool waswid = false;
+    QSqlQuery query;
+    query.prepare("DELETE FROM todolist WHERE task=:task");
+    query.bindValue(":task", task);
+    if (!query.exec()) {
+        qDebug() << "Delete error:" << query.lastError().text();
+    } else {
+        widget->deleteLater();
+    }
+    cnt--;
+    for (int i=0; i < ui->formLayout->count(); ++i) {
+        QWidget *widget = ui->formLayout->itemAt(i)->widget();
+        if (widget==wid1) waswid = true;
+        if (widget) {
+            MyCheckBox *cb = widget->findChild<MyCheckBox *>();
+            if (waswid == false) cb->setText(QString::number(i+1)+") "+cb->text().split(") ")[1]);
+            else cb->setText(QString::number(i)+") "+cb->text().split(") ")[1]);
+            QSqlQuery query;
+            query.prepare("UPDATE todolist SET task=:task WHERE task=task");
+            query.bindValue(":task", QString::number(cnt)+") "+cb->text().split(") ")[1]);
+            query.exec();
+        }
+    }
+    if (ui->formLayout->count()==1) ui->label_emptyList->setText("There are no tasks here..");
 }
 

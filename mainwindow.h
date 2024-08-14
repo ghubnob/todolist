@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QSqlDatabase>
 #include <QCheckBox>
+#include <QHBoxLayout>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,6 +20,8 @@ public:
     mainwindow(QWidget *parent = nullptr);
     ~mainwindow();
 
+    void deleteTask(const QString &task, QWidget *widget);
+
 private slots:
     void on_pushButton_clicked();
     void on_checkBox_clicked(const QString &task, bool checked);
@@ -32,7 +35,8 @@ private:
     Ui::mainwindow *ui;
     bool selected = false;
     int cnt=0;
-   QSqlDatabase db;
+    QSqlDatabase db;
+    QMenu *contextMenu;
 
     void setupDatabase();
     void loadListFromDatabase();

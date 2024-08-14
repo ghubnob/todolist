@@ -74,7 +74,8 @@ QPushButton:pressed {
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+     <string notr="true">QLineEdit {
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 rgba(150, 255, 255, 5), stop: 1 rgba(163, 245, 245, 100));
 
 border-style: outset;
@@ -83,7 +84,11 @@ border-width: 2px;
 border-radius: 5px;
 selection-color: black;
 selection-background-color: rgb(170, 255, 255);
-font: 10pt &quot;Alef&quot;;</string>
+font: 10pt &quot;Alef&quot;;
+}
+QLineEdit:!focus:empty {
+	/color: white;
+}</string>
     </property>
     <property name="text">
      <string>write your task here...</string>
@@ -134,6 +139,19 @@ font: 10pt 'Alef';</string>
     </property>
     <property name="text">
      <string>Your to-do list</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_emptyList">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>220</y>
+      <width>191</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
